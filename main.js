@@ -111,6 +111,11 @@ function setLanguage() {
   });
 }
 
+function setTheme(isDark) {
+    document.body.classList.toggle('dark', isDark);
+    document.getElementById('theme-toggle').textContent = isDark ? '☀️' : '🌙';
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+}
 
 window.addEventListener('DOMContentLoaded', function() {
     // Ensure correct pool shape fields are shown
@@ -127,10 +132,9 @@ window.addEventListener('DOMContentLoaded', function() {
     });
     setLanguage();
     document.getElementById('lang-switch').addEventListener('change', setLanguage);
-    // Theme toggle
-    const themeBtn = document.getElementById('theme-toggle');
-    themeBtn.addEventListener('click', function() {
-        document.body.classList.toggle('dark');
-        themeBtn.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
+
+    setTheme(localStorage.getItem('theme') === 'dark');
+    document.getElementById('theme-toggle').addEventListener('click', function() {
+        setTheme(!document.body.classList.contains('dark'));
     });
 });
