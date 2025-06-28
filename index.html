@@ -35,19 +35,19 @@
                 </div>
             </details>
             <label for="volume">Pool Volume (m³):</label>
-            <input type="number" id="volume" step="0.01" required>
+            <input type="number" id="volume" step="0.01" min="0" required>
 
             <label for="currentPh">Current pH:</label>
-            <input type="number" step="0.01" id="currentPh" required>
+            <input type="number" step="0.01" id="currentPh" min="0" max="14" required>
 
             <label for="targetPh">Target pH:</label>
-            <input type="number" step="0.01" id="targetPh" required>
+            <input type="number" value="7.2" step="0.01" id="targetPh" min="0" max="14" required>
 
             <label for="strength">Product Strength (pH change per dose):</label>
-            <input type="number" id="strength" step="0.01" placeholder="e.g. 0.2" required>
+            <input type="number" id="strength" step="0.01" min="0" placeholder="e.g. 0.2" required>
 
             <label for="dose">Dose (g):</label>
-            <input type="number" id="dose" step="1" placeholder="e.g. 150" required>
+            <input type="number" id="dose" step="1" min="0" placeholder="e.g. 150" required>
 
             <label for="doseVolume">Dose Volume (m³):</label>
             <input type="number" id="doseVolume" step="0.1" placeholder="e.g. 10" required>
