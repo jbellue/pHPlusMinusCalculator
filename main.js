@@ -4,23 +4,7 @@ function showFields() {
     document.getElementById('rectFields').style.display = shape === 'rect' ? '' : 'none';
     document.getElementById('roundFields').style.display = shape === 'round' ? '' : 'none';
 }
-document.getElementById('shape').addEventListener('change', showFields);
-// Add a helper to calculate phPerGramPerL from dose info
-function updatePhPerGramPerL() {
-    const s = parseFloat(document.getElementById('setStrength').value);
-    const d = parseFloat(document.getElementById('setDose').value);
-    const v = parseFloat(document.getElementById('setDoseVolume').value);
-    if (!isNaN(s) && !isNaN(d) && !isNaN(v) && d > 0 && v > 0) {
-        // s = pH delta for d grams in v m³
-        // Convert v m³ to liters
-        const liters = v * 1000;
-        // pH delta per gram per liter
-        const phPerGramPerL = s / (d * liters);
-        document.getElementById('phPerGramPerL').value = phPerGramPerL.toPrecision(5);
-    }
-}
 
-// Automatic calculation on input change
 function calculateAndDisplay() {
     const volume = parseFloat(document.getElementById('volume').value); // in m³
     const currentPh = parseFloat(document.getElementById('currentPh').value);
@@ -38,19 +22,15 @@ function calculateAndDisplay() {
     const neededDoses = (delta * volume) / (strength * doseVolume);
     const grams = neededDoses * dose;
     const roundedGrams = Math.round(grams);
+    let resultText = `Add approximately ${roundedGrams}g of pH`;
     if (targetPh > currentPh) {
-        resultDiv.textContent = `Add approximately ${roundedGrams}g of pH+ (increaser).`;
+        resultText += '+ (increaser).';
     } else {
-        resultDiv.textContent = `Add approximately ${roundedGrams}g of pH- (decreaser).`;
+        resultText += '- (decreaser).';
     }
+    resultDiv.textContent = resultText;
 }
 
-// Attach input listeners for auto-calc
-['volume','currentPh','targetPh','strength','dose','doseVolume'].forEach(id => {
-    document.getElementById(id).addEventListener('input', calculateAndDisplay);
-});
-
-// Keep submit for manual trigger and accessibility
 function autoCalcVolume() {
     const shape = document.getElementById('shape').value;
     let volume = 0;
@@ -76,18 +56,18 @@ function autoCalcVolume() {
         volResult.value = '';
     }
 }
-['length','width','depth','diameter','rdepth','shape'].forEach(id => {
-    document.getElementById(id).addEventListener('input', autoCalcVolume);
-});
 
 window.addEventListener('DOMContentLoaded', function() {
-    // Ensure the correct fields are shown for the selected shape
-    if (typeof showFields === 'function') {
-        showFields();
-    } else {
-        // fallback: manually trigger the logic if showFields is not global
-        const shape = document.getElementById('shape').value;
-        document.getElementById('rectFields').style.display = shape === 'rect' ? '' : 'none';
-        document.getElementById('roundFields').style.display = shape === 'round' ? '' : 'none';
-    }
+    // Ensure correct pool shape fields are shown
+    showFields();
+    document.getElementById('shape').addEventListener('change', showFields);
+    // Perform initial calculation
+    calculateAndDisplay();
+    // Attach input listeners for auto-calc
+    ['volume','currentPh','targetPh','strength','dose','doseVolume'].forEach(id => {
+        document.getElementById(id).addEventListener('input', calculateAndDisplay);
+    });
+    ['length','width','depth','diameter','rdepth','shape'].forEach(id => {
+        document.getElementById(id).addEventListener('input', autoCalcVolume);
+    });
 });
