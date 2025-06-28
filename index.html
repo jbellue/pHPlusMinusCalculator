@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pH+/- Pool Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Swimming Pool pH+/- Calculator</h1>
+        <form id="phForm">
+            <details style="margin-bottom:1em;">
+                <summary><strong>Calculate pool volume</strong></summary>
+                <div style="margin-top:1em;">
+                    <label for="shape">Shape:</label>
+                    <select id="shape">
+                        <option value="rect">Rectangle</option>
+                        <option value="round">Round</option>
+                    </select>
+                    <div id="rectFields">
+                        <label for="length">Length (m):</label>
+                        <input type="number" id="length" step="0.01">
+                        <label for="width">Width (m):</label>
+                        <input type="number" id="width" step="0.01">
+                        <label for="depth">Average Depth (m):</label>
+                        <input type="number" id="depth" step="0.01">
+                    </div>
+                    <div id="roundFields" style="display:none;">
+                        <label for="diameter">Diameter (m):</label>
+                        <input type="number" id="diameter" step="0.01">
+                        <label for="rdepth">Average Depth (m):</label>
+                        <input type="number" id="rdepth" step="0.01">
+                    </div>
+                    <button type="button" id="calcVolume">Calculate Volume</button>
+                    <div id="volResult" style="margin-top:1em;"></div>
+                </div>
+            </details>
+            <label for="volume">Pool Volume (m³):</label>
+            <input type="number" id="volume" step="0.01" required>
+
+            <label for="currentPh">Current pH:</label>
+            <input type="number" step="0.01" id="currentPh" required>
+
+            <label for="targetPh">Target pH:</label>
+            <input type="number" step="0.01" id="targetPh" required>
+
+            <label for="strength">Product Strength (pH change per dose):</label>
+            <input type="number" id="strength" step="0.01" placeholder="e.g. 0.2" required>
+
+            <label for="dose">Dose (g):</label>
+            <input type="number" id="dose" step="1" placeholder="e.g. 150" required>
+
+            <label for="doseVolume">Dose Volume (m³):</label>
+            <input type="number" id="doseVolume" step="0.1" placeholder="e.g. 10" required>
+
+            <button type="submit">Calculate</button>
+        </form>
+        <div id="result"></div>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>
