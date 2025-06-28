@@ -108,3 +108,15 @@ function autoCalcVolume() {
 ['length','width','depth','diameter','rdepth','shape'].forEach(id => {
     document.getElementById(id).addEventListener('input', autoCalcVolume);
 });
+
+window.addEventListener('DOMContentLoaded', function() {
+    // Ensure the correct fields are shown for the selected shape
+    if (typeof showFields === 'function') {
+        showFields();
+    } else {
+        // fallback: manually trigger the logic if showFields is not global
+        const shape = document.getElementById('shape').value;
+        document.getElementById('rectFields').style.display = shape === 'rect' ? '' : 'none';
+        document.getElementById('roundFields').style.display = shape === 'round' ? '' : 'none';
+    }
+});
