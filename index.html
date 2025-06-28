@@ -7,17 +7,16 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-        <button type="button" id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle dark mode">
-            🌙
-        </button>
+    <button type="button" id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle dark mode">
+        🌙
+    </button>
+    <div class="lang-switcher">
+        <select id="lang-switch" aria-label="Language">
+            <option value="en">🇬🇧</option>
+            <option value="fr">🇨🇵</option>
+        </select>
+    </div>
     <div class="container">
-        <div class="lang-switcher">
-            <label for="lang-switch" class="sr-only">Language</label>
-            <select id="lang-switch">
-                <option value="en">🇬🇧 English</option>
-                <option value="fr">🇨🇵 Français</option>
-            </select>
-        </div>
         <h1 data-i18n="title"></h1>
         <div id="phForm">
             <details class="volume-section">
