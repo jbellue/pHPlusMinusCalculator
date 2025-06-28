@@ -151,6 +151,17 @@ input:focus, select:focus {
         padding: 1.2em 0.5em 2em 0.5em;
         max-width: 100vw;
     }
+    .theme-toggle-btn {
+        top: 10px;
+        right: 10px;
+        width: 2.2em;
+        height: 2.2em;
+        font-size: 1.1em;
+    }
+    .lang-switcher {
+        margin-top: 2.8em;
+        margin-bottom: 1em;
+    }
 }
 /* Dark theme */
 body.dark {
