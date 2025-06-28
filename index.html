@@ -8,48 +8,54 @@
 </head>
 <body>
     <div class="container">
-        <h1>Swimming Pool pH+/- Calculator</h1>
+        <div class="lang-switcher">
+            <select id="lang-switch">
+                <option value="en">🇬🇧 English</option>
+                <option value="fr">🇨🇵 Français</option>
+            </select>
+        </div>
+        <h1 data-i18n="title"></h1>
         <form id="phForm">
             <details class="volume-section">
-                <summary>Calculate pool volume</summary>
+                <summary data-i18n="volCalc"></summary>
                 <div>
-                    <label for="shape">Shape:</label>
+                    <label for="shape" data-i18n="shape"></label>
                     <select id="shape">
-                        <option value="rect">Rectangle</option>
-                        <option value="round">Round</option>
+                        <option value="rect" data-i18n="rect"></option>
+                        <option value="round" data-i18n="round"></option>
                     </select>
                     <div id="rectFields">
-                        <label for="length">Length (m):</label>
+                        <label for="length" data-i18n="length"></label>
                         <input type="number" id="length" step="0.01">
-                        <label for="width">Width (m):</label>
+                        <label for="width" data-i18n="width"></label>
                         <input type="number" id="width" step="0.01">
-                        <label for="depth">Average Depth (m):</label>
+                        <label for="depth" data-i18n="depth"></label>
                         <input type="number" id="depth" step="0.01">
                     </div>
                     <div id="roundFields" style="display:none;">
-                        <label for="diameter">Diameter (m):</label>
+                        <label for="diameter" data-i18n="diameter"></label>
                         <input type="number" id="diameter" step="0.01">
-                        <label for="rdepth">Average Depth (m):</label>
+                        <label for="rdepth" data-i18n="rdepth"></label>
                         <input type="number" id="rdepth" step="0.01">
                     </div>
                 </div>
             </details>
-            <label for="volume">Pool Volume (m³):</label>
+            <label for="volume" data-i18n="volume"></label>
             <input type="number" id="volume" step="0.01" min="0" required>
 
-            <label for="currentPh">Current pH:</label>
+            <label for="currentPh" data-i18n="currentPh"></label>
             <input type="number" step="0.01" id="currentPh" min="0" max="14" required>
 
-            <label for="targetPh">Target pH:</label>
+            <label for="targetPh" data-i18n="targetPh"></label>
             <input type="number" value="7.2" step="0.01" id="targetPh" min="0" max="14" required>
 
-            <label for="strength">Product Strength (pH change per dose):</label>
+            <label for="strength" data-i18n="strength"></label>
             <input type="number" id="strength" step="0.01" min="0" placeholder="e.g. 0.2" required>
 
-            <label for="dose">Dose (g):</label>
+            <label for="dose" data-i18n="dose"></label>
             <input type="number" id="dose" step="1" min="0" placeholder="e.g. 150" required>
 
-            <label for="doseVolume">Dose Volume (m³):</label>
+            <label for="doseVolume" data-i18n="doseVolume"></label>
             <input type="number" id="doseVolume" step="0.1" min="0" placeholder="e.g. 10" required>
         </form>
         <div id="result"></div>

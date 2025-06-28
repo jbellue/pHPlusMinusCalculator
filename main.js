@@ -57,6 +57,60 @@ function autoCalcVolume() {
     }
 }
 
+const translations = {
+  en: {
+    title: "Swimming Pool pH+/- Calculator",
+    volCalc: "Calculate pool volume",
+    shape: "Shape:",
+    rect: "Rectangle",
+    round: "Round",
+    length: "Length (m):",
+    width: "Width (m):",
+    depth: "Average Depth (m):",
+    diameter: "Diameter (m):",
+    rdepth: "Average Depth (m):",
+    volume: "Pool Volume (m³):",
+    currentPh: "Current pH:",
+    targetPh: "Target pH:",
+    strength: "Product Strength (pH change per dose):",
+    dose: "Dose (g):",
+    doseVolume: "Dose Volume (m³):"
+  },
+  fr: {
+    title: "Calculateur pH+/- pour piscine",
+    volCalc: "Calculer le volume de la piscine",
+    shape: "Forme :",
+    rect: "Rectangle",
+    round: "Ronde",
+    length: "Longueur (m) :",
+    width: "Largeur (m) :",
+    depth: "Profondeur moyenne (m) :",
+    diameter: "Diamètre (m) :",
+    rdepth: "Profondeur moyenne (m) :",
+    volume: "Volume de la piscine (m³) :",
+    currentPh: "pH actuel :",
+    targetPh: "pH cible :",
+    strength: "Puissance du produit (variation de pH par dose) :",
+    dose: "Dose (g) :",
+    doseVolume: "Volume de dose (m³) :"
+  }
+};
+
+function setLanguage() {
+  const lang = document.getElementById('lang-switch').value;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (translations[lang][key]) {
+      if (el.tagName === 'OPTION') {
+        el.textContent = translations[lang][key];
+      } else {
+        el.innerText = translations[lang][key];
+      }
+    }
+  });
+}
+
+
 window.addEventListener('DOMContentLoaded', function() {
     // Ensure correct pool shape fields are shown
     showFields();
@@ -70,4 +124,6 @@ window.addEventListener('DOMContentLoaded', function() {
     ['length','width','depth','diameter','rdepth','shape'].forEach(id => {
         document.getElementById(id).addEventListener('input', autoCalcVolume);
     });
+    setLanguage();
+    document.getElementById('lang-switch').addEventListener('change', setLanguage);
 });
