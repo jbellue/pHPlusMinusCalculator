@@ -49,24 +49,6 @@ input:focus, select:focus {
     outline: none;
     box-shadow: 0 0 0 2px #90caf9;
 }
-button {
-    margin-top: 2.2em;
-    width: 100%;
-    padding: 1em;
-    background: linear-gradient(90deg, #1976d2 60%, #42a5f5 100%);
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    font-size: 1.15em;
-    font-weight: 700;
-    cursor: pointer;
-    box-shadow: 0 2px 12px rgba(25, 118, 210, 0.10);
-    transition: background 0.2s, box-shadow 0.2s;
-}
-button:hover {
-    background: linear-gradient(90deg, #1565c0 60%, #1976d2 100%);
-    box-shadow: 0 4px 18px rgba(25, 118, 210, 0.13);
-}
 #result {
     margin-top: 2.2em;
     font-weight: 700;

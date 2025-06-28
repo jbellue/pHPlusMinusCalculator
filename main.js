@@ -1,32 +1,3 @@
-// Basic formula: 1g of pH+ (sodium bisulfate) raises 1m³ (1000L) by ~0.001 pH
-// 1g of pH- (hydrochloric acid or sodium bisulfate) lowers 1m³ by ~0.001 pH
-// This is a simplification. Always check product instructions.
-document.getElementById('phForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const volume = parseFloat(document.getElementById('volume').value); // in m³
-    const currentPh = parseFloat(document.getElementById('currentPh').value);
-    const targetPh = parseFloat(document.getElementById('targetPh').value);
-    const strength = parseFloat(document.getElementById('strength').value); // pH change per dose
-    const dose = parseFloat(document.getElementById('dose').value); // grams per dose
-    const doseVolume = parseFloat(document.getElementById('doseVolume').value); // m³ per dose
-    const resultDiv = document.getElementById('result');
-
-    if (isNaN(volume) || isNaN(currentPh) || isNaN(targetPh) || isNaN(strength) || isNaN(dose) || isNaN(doseVolume)) {
-        resultDiv.textContent = 'Please fill in all fields.';
-        return;
-    }
-    const delta = Math.abs(targetPh - currentPh);
-    // Calculate how many doses are needed for the whole pool
-    const neededDoses = (delta * volume) / (strength * doseVolume);
-    const grams = neededDoses * dose;
-    const roundedGrams = Math.round(grams);
-    if (targetPh > currentPh) {
-        resultDiv.textContent = `Add approximately ${roundedGrams}g of pH+ (increaser).`;
-    } else {
-        resultDiv.textContent = `Add approximately ${roundedGrams}g of pH- (decreaser).`;
-    }
-});
-
 // Pool volume calculator logic
 function showFields() {
     const shape = document.getElementById('shape').value;
