@@ -98,6 +98,7 @@ const translations = {
 
 function setLanguage() {
   const lang = document.getElementById('lang-switch').value;
+  document.documentElement.lang = lang;
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
     if (translations[lang][key]) {
