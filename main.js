@@ -127,4 +127,10 @@ window.addEventListener('DOMContentLoaded', function() {
     });
     setLanguage();
     document.getElementById('lang-switch').addEventListener('change', setLanguage);
+    // Theme toggle
+    const themeBtn = document.getElementById('theme-toggle');
+    themeBtn.addEventListener('click', function() {
+        document.body.classList.toggle('dark');
+        themeBtn.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
+    });
 });
