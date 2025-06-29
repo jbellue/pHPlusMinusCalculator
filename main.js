@@ -86,9 +86,8 @@ function setLanguage() {
 }
 
 function setTheme(isDark) {
-    document.body.classList.toggle('dark', isDark);
-    document.getElementById('theme-toggle').textContent = isDark ? '☀️' : '🌙';
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  document.body.classList.toggle('dark', isDark);
+  document.getElementById('theme-toggle-checkbox').checked = isDark;
 }
 
 window.addEventListener('DOMContentLoaded', function() {
@@ -107,8 +106,12 @@ window.addEventListener('DOMContentLoaded', function() {
     setLanguage();
     document.getElementById('lang-switch').addEventListener('change', setLanguage);
 
-    setTheme(localStorage.getItem('theme') === 'dark');
-    document.getElementById('theme-toggle').addEventListener('click', function() {
-        setTheme(!document.body.classList.contains('dark'));
+    const themeCheckbox = document.getElementById('theme-toggle-checkbox');
+    // Set initial state
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    setTheme(prefersDark);
+    // Listen for changes
+    themeCheckbox.addEventListener('change', function() {
+        setTheme(this.checked);
     });
 });
