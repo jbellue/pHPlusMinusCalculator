@@ -134,8 +134,10 @@ window.addEventListener('DOMContentLoaded', function() {
         });
 
         const themeCheckbox = document.getElementById('theme-toggle-checkbox');
-        // Set initial state
-        setTheme(themeCheckbox.checked);
+        // Set initial state based on prefers-color-scheme
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        themeCheckbox.checked = prefersDark;
+        setTheme(prefersDark);
         // Listen for changes
         themeCheckbox.addEventListener('change', function() {
             setTheme(this.checked);
