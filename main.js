@@ -6,14 +6,30 @@ function showFields() {
 }
 
 let translations = {};
+let allTranslations = {};
 
-function loadLanguage(lang, callback) {
-    fetch(`locales/${lang}.json`)
-    .then(response => response.json())
-    .then(data => {
-        translations = data;
+const locales = [
+    { code: 'en', flag: '🇬🇧' },
+    { code: 'fr', flag: '🇨🇵' }
+];
+
+function fetchAllLocales(callback) {
+    Promise.all(
+        locales.map(loc =>
+            fetch(`locales/${loc.code}.json`).then(r => r.json())
+        )
+    ).then(results => {
+        allTranslations = {};
+        locales.forEach((loc, i) => {
+            allTranslations[loc.code] = results[i];
+        });
         if (typeof callback === 'function') callback();
     });
+}
+
+function loadLanguage(lang, callback) {
+    translations = allTranslations[lang] || {};
+    if (typeof callback === 'function') callback();
 }
 
 function setLanguage() {
@@ -93,24 +109,36 @@ function setTheme(isDark) {
 }
 
 window.addEventListener('DOMContentLoaded', function() {
-    // Ensure correct pool shape fields are shown
-    showFields();
-    setLanguage();
-    document.getElementById('lang-switch').addEventListener('change', setLanguage);
-    document.getElementById('shape').addEventListener('change', showFields);
-    // Attach input listeners for auto-calc
-    ['volume','currentPh','targetPh','strength','dose','doseVolume'].forEach(id => {
-        document.getElementById(id).addEventListener('input', calculateAndDisplay);
+    // Dynamically populate language dropdown
+    const langSwitch = document.getElementById('lang-switch');
+    langSwitch.innerHTML = '';
+    locales.forEach(loc => {
+        const opt = document.createElement('option');
+        opt.value = loc.code;
+        opt.textContent = loc.flag;
+        langSwitch.appendChild(opt);
     });
-    ['length','width','depth','diameter','rdepth','shape'].forEach(id => {
-        document.getElementById(id).addEventListener('input', autoCalcVolume);
-    });
+    // Fetch all locales first for offline use
+    fetchAllLocales(() => {
+        // Ensure correct pool shape fields are shown
+        showFields();
+        setLanguage();
+        document.getElementById('lang-switch').addEventListener('change', setLanguage);
+        document.getElementById('shape').addEventListener('change', showFields);
+        // Attach input listeners for auto-calc
+        ['volume','currentPh','targetPh','strength','dose','doseVolume'].forEach(id => {
+            document.getElementById(id).addEventListener('input', calculateAndDisplay);
+        });
+        ['length','width','depth','diameter','rdepth','shape'].forEach(id => {
+            document.getElementById(id).addEventListener('input', autoCalcVolume);
+        });
 
-    const themeCheckbox = document.getElementById('theme-toggle-checkbox');
-    // Set initial state
-    setTheme(themeCheckbox.checked);
-    // Listen for changes
-    themeCheckbox.addEventListener('change', function() {
-        setTheme(this.checked);
+        const themeCheckbox = document.getElementById('theme-toggle-checkbox');
+        // Set initial state
+        setTheme(themeCheckbox.checked);
+        // Listen for changes
+        themeCheckbox.addEventListener('change', function() {
+            setTheme(this.checked);
+        });
     });
 });
