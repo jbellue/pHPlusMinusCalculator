@@ -1,0 +1,18 @@
+{
+    "title": "Swimming Pool pH+/- Calculator",
+    "volCalc": "Calculate pool volume",
+    "shape": "Shape:",
+    "rect": "Rectangle",
+    "round": "Round",
+    "length": "Length (m):",
+    "width": "Width (m):",
+    "depth": "Average Depth (m):",
+    "diameter": "Diameter (m):",
+    "rdepth": "Average Depth (m):",
+    "volume": "Pool Volume (m³):",
+    "currentPh": "Current pH:",
+    "targetPh": "Target pH:",
+    "strength": "Product Strength (pH change per dose):",
+    "dose": "Dose (g):",
+    "doseVolume": "Dose Volume (m³):"
+}

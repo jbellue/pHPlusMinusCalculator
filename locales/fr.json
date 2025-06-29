@@ -1,0 +1,18 @@
+{
+    "title": "Calculateur pH+/- pour piscine",
+    "volCalc": "Calculer le volume de la piscine",
+    "shape": "Forme :",
+    "rect": "Rectangle",
+    "round": "Ronde",
+    "length": "Longueur (m) :",
+    "width": "Largeur (m) :",
+    "depth": "Profondeur moyenne (m) :",
+    "diameter": "Diamètre (m) :",
+    "rdepth": "Profondeur moyenne (m) :",
+    "volume": "Volume de la piscine (m³) :",
+    "currentPh": "pH actuel :",
+    "targetPh": "pH cible :",
+    "strength": "Puissance du produit (variation de pH par dose) :",
+    "dose": "Dose (g) :",
+    "doseVolume": "Volume de dose (m³) :"
+}
