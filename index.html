@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>pH+/- Pool Calculator</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏊</text></svg>">
+    <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
     <script src="main.js" defer></script>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2196f3">
 </head>
 <body>
     <input type="checkbox" id="theme-toggle-checkbox" class="theme-toggle-checkbox" aria-label="Toggle dark mode">
@@ -61,5 +63,12 @@
         </div>
         <div id="result" aria-live="polite"></div>
     </div>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('sw.js');
+            });
+        }
+    </script>
 </body>
 </html>
