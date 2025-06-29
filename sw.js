@@ -15,8 +15,29 @@ self.addEventListener('install', event => {
     );
 });
 
+self.addEventListener('activate', event => {
+    event.waitUntil(
+        caches.keys().then(cacheNames => {
+            return Promise.all(
+                cacheNames.filter(name => name !== CACHE_NAME)
+                    .map(name => caches.delete(name))
+            );
+        })
+    );
+});
+
 self.addEventListener('fetch', event => {
     event.respondWith(
-        caches.match(event.request).then(response => response || fetch(event.request))
+        caches.open(CACHE_NAME).then(cache =>
+            cache.match(event.request).then(cachedResponse => {
+                const fetchPromise = fetch(event.request).then(networkResponse => {
+                    if (networkResponse && networkResponse.status === 200) {
+                        cache.put(event.request, networkResponse.clone());
+                    }
+                    return networkResponse;
+                }).catch(() => cachedResponse);
+                return cachedResponse || fetchPromise;
+            })
+        )
     );
 });
