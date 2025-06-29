@@ -14,5 +14,7 @@
     "targetPh": "Target pH:",
     "strength": "Product Strength (pH change per dose):",
     "dose": "Dose (g):",
-    "doseVolume": "Dose Volume (m³):"
+    "doseVolume": "Dose Volume (m³):",
+    "addPlus": "Add approximately {g}g of pH+ (increaser).",
+    "addMinus": "Add approximately {g}g of pH- (decreaser)."
 }

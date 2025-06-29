@@ -5,7 +5,40 @@ function showFields() {
     document.getElementById('roundFields').style.display = shape === 'round' ? '' : 'none';
 }
 
+let translations = {};
+
+function loadLanguage(lang, callback) {
+    fetch(`locales/${lang}.json`)
+    .then(response => response.json())
+    .then(data => {
+        translations = data;
+        if (typeof callback === 'function') callback();
+    });
+}
+
+function setLanguage() {
+    const lang = document.getElementById('lang-switch').value;
+    document.documentElement.lang = lang;
+    loadLanguage(lang, () => {
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[key]) {
+            if (el.tagName === 'OPTION') {
+                el.textContent = translations[key];
+            } else {
+                el.innerText = translations[key];
+            }
+        }
+        });
+        calculateAndDisplay();
+    });
+}
+
 function calculateAndDisplay() {
+    if (!translations) {
+        // Don't attempt to display result until translations are loaded
+        return;
+    }
     const volume = parseFloat(document.getElementById('volume').value); // in m³
     const currentPh = parseFloat(document.getElementById('currentPh').value);
     const targetPh = parseFloat(document.getElementById('targetPh').value);
@@ -13,6 +46,7 @@ function calculateAndDisplay() {
     const dose = parseFloat(document.getElementById('dose').value); // grams per dose
     const doseVolume = parseFloat(document.getElementById('doseVolume').value); // m³ per dose
     const resultDiv = document.getElementById('result');
+    const lang = document.getElementById('lang-switch').value;
 
     if (isNaN(volume) || isNaN(currentPh) || isNaN(targetPh) || isNaN(strength) || isNaN(dose) || isNaN(doseVolume)) {
         resultDiv.textContent = '';
@@ -20,14 +54,9 @@ function calculateAndDisplay() {
     }
     const delta = Math.abs(targetPh - currentPh);
     const neededDoses = (delta * volume) / (strength * doseVolume);
-    const grams = neededDoses * dose;
-    const roundedGrams = Math.round(grams);
-    let resultText = `Add approximately ${roundedGrams}g of pH`;
-    if (targetPh > currentPh) {
-        resultText += '+ (increaser).';
-    } else {
-        resultText += '- (decreaser).';
-    }
+    const grams = Math.round(neededDoses * dose);
+    let resultKey = targetPh > currentPh ? 'addPlus' : 'addMinus';
+    const resultText = translations[resultKey].replace(/\{g\}/g, grams);
     resultDiv.textContent = resultText;
 }
 
@@ -57,45 +86,18 @@ function autoCalcVolume() {
     }
 }
 
-let translations = {};
-
-function loadLanguage(lang, callback) {
-  fetch(`locales/${lang}.json`)
-    .then(response => response.json())
-    .then(data => {
-      translations = data;
-      callback();
-    });
-}
-
-function setLanguage() {
-  const lang = document.getElementById('lang-switch').value;
-  document.documentElement.lang = lang;
-  loadLanguage(lang, () => {
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-      const key = el.getAttribute('data-i18n');
-      if (translations[key]) {
-        if (el.tagName === 'OPTION') {
-          el.textContent = translations[key];
-        } else {
-          el.innerText = translations[key];
-        }
-      }
-    });
-  });
-}
 
 function setTheme(isDark) {
-  document.body.classList.toggle('dark', isDark);
-  document.getElementById('theme-toggle-checkbox').checked = isDark;
+    document.body.classList.toggle('dark', isDark);
+    document.getElementById('theme-toggle-checkbox').checked = isDark;
 }
 
 window.addEventListener('DOMContentLoaded', function() {
     // Ensure correct pool shape fields are shown
     showFields();
+    setLanguage();
+    document.getElementById('lang-switch').addEventListener('change', setLanguage);
     document.getElementById('shape').addEventListener('change', showFields);
-    // Perform initial calculation
-    calculateAndDisplay();
     // Attach input listeners for auto-calc
     ['volume','currentPh','targetPh','strength','dose','doseVolume'].forEach(id => {
         document.getElementById(id).addEventListener('input', calculateAndDisplay);
@@ -103,13 +105,10 @@ window.addEventListener('DOMContentLoaded', function() {
     ['length','width','depth','diameter','rdepth','shape'].forEach(id => {
         document.getElementById(id).addEventListener('input', autoCalcVolume);
     });
-    setLanguage();
-    document.getElementById('lang-switch').addEventListener('change', setLanguage);
 
     const themeCheckbox = document.getElementById('theme-toggle-checkbox');
     // Set initial state
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    setTheme(prefersDark);
+    setTheme(themeCheckbox.checked);
     // Listen for changes
     themeCheckbox.addEventListener('change', function() {
         setTheme(this.checked);
