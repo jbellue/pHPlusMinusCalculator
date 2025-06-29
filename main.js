@@ -21,14 +21,14 @@ function setLanguage() {
     document.documentElement.lang = lang;
     loadLanguage(lang, () => {
         document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (translations[key]) {
-            if (el.tagName === 'OPTION') {
-                el.textContent = translations[key];
-            } else {
-                el.innerText = translations[key];
+            const key = el.getAttribute('data-i18n');
+            if (translations[key]) {
+                if (el.tagName === 'OPTION') {
+                    el.textContent = translations[key];
+                } else {
+                    el.innerText = translations[key];
+                }
             }
-        }
         });
         calculateAndDisplay();
     });
